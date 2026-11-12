@@ -176,7 +176,7 @@
       "id": "pv-dashboard",
       "name": "VOID Home Dashboard",
       "repo": "PV-Dashboard",
-      "public": true,
+      "public": false,
       "kind": "android",
       "category": "Zuhause",
       "mono": "PV",
