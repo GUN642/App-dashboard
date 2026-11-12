@@ -314,7 +314,7 @@
       "id": "ote-tool",
       "name": "OT&E Planer",
       "repo": "OTE-Tool",
-      "public": false,
+      "public": true,
       "kind": "web",
       "category": "Arbeit",
       "mono": "OT",
