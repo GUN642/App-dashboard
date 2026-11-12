@@ -16,7 +16,7 @@
     filter: "alle",
     query: "",
     sort: store(LS.sort) || "update",
-    saving: new Set(),
+    saving: new Map(),
   };
 
   const $ = (s, el = document) => el.querySelector(s);
@@ -97,7 +97,7 @@
     const msg = MODE === "private" ? a.live?.lastCommit?.message : "";
     const vis = MODE === "private" ? `
       <div class="vis" title="Auf der öffentlichen Seite zeigen">
-        <button class="switch" role="switch" aria-checked="${a.public}" aria-label="Öffentlich: ${esc(a.name)}" data-toggle="${esc(a.id)}" ${state.saving.has(a.id) ? "disabled" : ""}></button>
+        <button class="switch" role="switch" aria-checked="${state.saving.has(a.id) ? state.saving.get(a.id) : a.public}" aria-label="Öffentlich: ${esc(a.name)}" data-toggle="${esc(a.id)}" ${state.saving.has(a.id) ? "disabled" : ""}></button>
       </div>` : "";
     return `
       <article class="card${vis ? " has-vis" : ""}" data-id="${esc(a.id)}" tabindex="0" aria-label="${esc(a.name)}">
@@ -294,7 +294,48 @@
   const utf8ToB64 = s => { const b = new TextEncoder().encode(s); let x = ""; for (const c of b) x += String.fromCharCode(c); return btoa(x); };
   const b64ToUtf8 = s => new TextDecoder().decode(b64(s.replace(/\n/g, "")));
 
-  async function setPublic(id, value) {
+  // Schreibzugriffe auf apps.json nacheinander. Die zuletzt geschriebene Fassung (sha) wird gemerkt,
+  // weil die Contents-API kurz nach einem Commit noch die alte Fassung liefern kann (sonst HTTP 409).
+  let writeQueue = Promise.resolve();
+  let lastFile = null; // { sha, json, branch }
+
+  async function readAppsJson() {
+    const repo = state.data.repo;
+    const branch = lastFile?.branch || (await ghApi(`/repos/${repo}`)).default_branch;
+    const file = await ghApi(`/repos/${repo}/contents/apps.json?ref=${encodeURIComponent(branch)}&t=${Date.now()}`, { cache: "no-store" });
+    return { sha: file.sha, json: JSON.parse(b64ToUtf8(file.content)), branch };
+  }
+
+  async function writePublic(a, value) {
+    const repo = state.data.repo;
+    let file = lastFile || await readAppsJson();
+    for (let attempt = 0; ; attempt++) {
+      const json = structuredClone(file.json);
+      const entry = json.apps.find(x => x.id === a.id);
+      if (!entry) throw new Error(`${a.id} fehlt in apps.json`);
+      entry.public = value;
+      try {
+        const res = await ghApi(`/repos/${repo}/contents/apps.json`, {
+          method: "PUT",
+          body: JSON.stringify({
+            message: `${a.name} ${value ? "öffentlich zeigen" : "nur privat zeigen"}`,
+            content: utf8ToB64(JSON.stringify(json, null, 2) + "\n"),
+            sha: file.sha,
+            branch: file.branch,
+          }),
+        });
+        lastFile = { sha: res.content.sha, json, branch: file.branch };
+        return;
+      } catch (e) {
+        if (!/^HTTP 409/.test(e.message) || attempt >= 4) throw e;
+        lastFile = null;
+        await new Promise(r => setTimeout(r, 800 * (attempt + 1)));
+        file = await readAppsJson();
+      }
+    }
+  }
+
+  function setPublic(id, value) {
     const a = state.data.apps.find(x => x.id === id);
     if (!a) return;
     if (!store(LS.token)) {
@@ -303,35 +344,22 @@
       renderGrid();
       return;
     }
-    const repo = state.data.repo;
-    state.saving.add(id);
+    state.saving.set(id, value);
     renderGrid();
-    try {
-      const info = await ghApi(`/repos/${repo}`);
-      const branch = info.default_branch;
-      const file = await ghApi(`/repos/${repo}/contents/apps.json?ref=${encodeURIComponent(branch)}`);
-      const json = JSON.parse(b64ToUtf8(file.content));
-      const entry = json.apps.find(x => x.id === id);
-      if (!entry) throw new Error(`${id} fehlt in apps.json`);
-      entry.public = value;
-      await ghApi(`/repos/${repo}/contents/apps.json`, {
-        method: "PUT",
-        body: JSON.stringify({
-          message: `${a.name} ${value ? "öffentlich zeigen" : "nur privat zeigen"}`,
-          content: utf8ToB64(JSON.stringify(json, null, 2) + "\n"),
-          sha: file.sha,
-          branch,
-        }),
-      });
-      a.public = value;
-      toast(`${a.name}: ${value ? "öffentlich" : "nur für dich"}. Die Seite ist in 1 bis 2 Minuten aktuell.`);
-    } catch (e) {
-      toast(`Nicht gespeichert. ${e.message}`, true);
-    } finally {
-      state.saving.delete(id);
-      renderStats();
-      renderGrid();
-    }
+    writeQueue = writeQueue.then(async () => {
+      try {
+        await writePublic(a, value);
+        a.public = value;
+        toast(`${a.name}: ${value ? "öffentlich" : "nur für dich"}. Die Seite ist in 1 bis 2 Minuten aktuell.`);
+      } catch (e) {
+        lastFile = null;
+        toast(`Nicht gespeichert. ${e.message}`, true);
+      } finally {
+        state.saving.delete(id);
+        renderStats();
+        renderGrid();
+      }
+    });
   }
 
   async function refreshNow() {
