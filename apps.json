@@ -1,0 +1,364 @@
+{
+  "owner": "GUN642",
+  "title": "VOID Apps",
+  "apps": [
+    {
+      "id": "void-files",
+      "name": "VOID Files",
+      "repo": "File-manager",
+      "public": true,
+      "kind": "android",
+      "category": "Werkzeug",
+      "mono": "VF",
+      "tagline": "Minimalistischer Dateimanager im Nothing-Stil.",
+      "description": "Volle Dateiverwaltung mit Papierkorb, Archiven und Proton Drive. Schwarz, kontrastreich, mit Punktmatrix-Überschriften. Die Vorlage für den Stil aller VOID-Apps.",
+      "features": [
+        "Kopieren, Verschieben, Umbenennen, Mehrfachauswahl, Suche, Teilen",
+        "Papierkorb mit Wiederherstellen",
+        "ZIP (auch AES), 7z, TAR, RAR bis RAR4 entpacken, ZIP mit Passwort erstellen",
+        "Querformat mit zwei Ordnern nebeneinander",
+        "Proton Drive als Cloud-Ordner",
+        "Sieben Designs und sieben Akzentfarben"
+      ],
+      "tutorial": [
+        "Unter Download die neueste APK laden und öffnen.",
+        "Beim ersten Mal die Installation aus dieser Quelle erlauben.",
+        "App starten und den Zugriff auf alle Dateien erlauben.",
+        "Lange auf eine Datei drücken für Mehrfachauswahl, Menü oben rechts für Designs.",
+        "Im Querformat liegen zwei Ordner nebeneinander. Der Pfeil kopiert oder verschiebt."
+      ],
+      "links": []
+    },
+    {
+      "id": "void-notes",
+      "name": "VOID Notes",
+      "repo": "VOID-Notes",
+      "public": true,
+      "kind": "android",
+      "category": "Werkzeug",
+      "mono": "VN",
+      "tagline": "Notizen wie Notion, im Nothing-Stil.",
+      "description": "Seiten mit Unterseiten, Block-Editor, Vorlagen, Notion-Import, Teilen per Link mit Ende-zu-Ende-Verschlüsselung und ein Widget für den Homescreen. Läuft auch in Samsung DeX mit Maus und Tastenkürzeln.",
+      "features": [
+        "Seitenbaum mit Favoriten, zuletzt verwendet und Papierkorb",
+        "Block-Editor mit / Befehlen und Markdown-Kürzeln",
+        "Vorlagen mit Platzhaltern für Datum, Woche und Monat",
+        "Notion-Import aus dem Workspace-Export",
+        "PDF, Markdown, Drucken, Sicherung als ZIP",
+        "Teilen per Link, verschlüsselt, live gemeinsam bearbeiten",
+        "Widget mit Favoriten oder letzten Notizen"
+      ],
+      "tutorial": [
+        "APK laden, installieren und öffnen.",
+        "Mit + eine Seite anlegen. / im Text öffnet alle Blocktypen.",
+        "Eine Vorlage wählen oder eigene unter Seite, ⋮, Als Vorlage speichern anlegen.",
+        "Notion umziehen: Export als Markdown und CSV, dann Einstellungen, Import.",
+        "Widget auf dem Homescreen ablegen für schnellen Zugriff."
+      ],
+      "links": []
+    },
+    {
+      "id": "void-maps",
+      "name": "VOID Maps",
+      "repo": "VOID-Maps",
+      "public": false,
+      "kind": "android",
+      "category": "Navigation",
+      "mono": "VM",
+      "tagline": "Private Auto-Navigation auf Basis von OpenStreetMap.",
+      "description": "Navigation mit eigenem Kartenstil, bis zu drei Routen, Fahrspurassistent, Verkehr von TomTom, Offline-Karten und Android Auto.",
+      "features": [
+        "Vektorkarte im Void-Stil, Satellitenbild, 3D-Gebäude, Relief",
+        "Valhalla oder TomTom mit Live-Verkehr",
+        "Fahrspurassistent und Sprachansagen",
+        "Ziele aus Google Maps, WhatsApp und Co. per Teilen",
+        "Offline-Karten und Android Auto",
+        "Blitzer optional, Standard aus"
+      ],
+      "tutorial": [
+        "APK laden und installieren, Standortzugriff erlauben.",
+        "Ziel suchen, lange auf die Karte drücken oder einen Ort aus einer anderen App teilen.",
+        "Aus bis zu drei Routen wählen. Die schnellste startet nach 5 Sekunden.",
+        "Für Live-Verkehr und schnelle Suche einen TomTom-Schlüssel im Menü eintragen.",
+        "Offline-Karten: Bereich auf der Karte wählen und herunterladen."
+      ],
+      "links": []
+    },
+    {
+      "id": "dex-reloaded",
+      "name": "DEX reloaded",
+      "repo": "DEX-reloaded",
+      "public": false,
+      "kind": "android",
+      "category": "XR",
+      "mono": "DX",
+      "tagline": "Virtuelle Arbeitsfläche mit drei Bildschirmen auf der XR-Brille.",
+      "description": "Ersatz für Samsung DeX und Viture SpaceWalker. Jede installierte App läuft in einem eigenen Bildschirm auf der VITURE Pro 2. Kopf-Tracking, echtes 3D, Breitbild mit Fenstern, Kinosaal und Monitor-Modus.",
+      "features": [
+        "Drei und mehr Bildschirme mit je einer beliebigen App",
+        "Kopf-Tracking mit 500 Hz über das Viture-SDK",
+        "Echtes 3D im 3D-Modus der Brille",
+        "Breitbild mit verschiebbaren Fenstern, Fenster-Desktop in der Mitte",
+        "Trackpad am Handy, Bluetooth-Maus und -Tastatur",
+        "Monitor-Modus für externe Bildschirme und NexDock",
+        "Kinosaal, Umgebungen, Arbeitsplätze, Widget"
+      ],
+      "tutorial": [
+        "Shizuku installieren und per Wireless Debugging starten.",
+        "DEX reloaded installieren und Shizuku die Berechtigung geben.",
+        "HDMI-Modus in den Samsung-Einstellungen auf Bildschirm spiegeln stellen, Brille anstecken.",
+        "Im Reiter Start die Arbeitsfläche starten und Apps auf die Bildschirme legen.",
+        "Trackpad öffnen. Ein Finger bewegt, Tippen klickt, zwei Finger scrollen.",
+        "Nach jedem Neustart des Handys Shizuku neu starten."
+      ],
+      "links": [
+        { "label": "Shizuku", "url": "https://shizuku.rikka.app/" }
+      ]
+    },
+    {
+      "id": "soldaten-dashboard",
+      "name": "Soldaten Dashboard Reloaded",
+      "repo": "Soldaten-Dashboard-reloaded",
+      "public": false,
+      "kind": "android",
+      "category": "Dienst",
+      "mono": "SD",
+      "tagline": "Dienstalltag in einer App: Kalender, Urlaub, Lehrgänge, Akte, Tools.",
+      "description": "Native Neuauflage des Soldaten Dashboards. Heute-Ansicht mit Wetter und Fristen, Gerätekalender, Urlaubs- und Überstundenkonto, Ablaufregister für Lehrgänge, Dokumente und eine Sammlung dienstlicher Rechner.",
+      "features": [
+        "Heute: KW, Feiertage, Ferien, Resturlaub, Termine, Wetter",
+        "Kalender direkt aus dem Gerät, ICS-Abos, Geburtstage",
+        "Urlaubskonto nach Bundesland und Überstundenkonto",
+        "Lehrgänge mit Ampel, Dokumente mit Kopien, Akte mit IGF und Impfungen",
+        "Tools: Zulu-Zeit, DTG, WGS84 / UTM / MGRS, DUZ-Rechner, BFT",
+        "Widget, Suche, Erinnerungen, Update-Prüfung"
+      ],
+      "tutorial": [
+        "APK laden und installieren.",
+        "Der Einrichtungsassistent fragt Bundesland, Urlaub und Kalender ab.",
+        "Daten aus dem alten Dashboard: dort Export .json, hier Menü, Sicherung, Importieren.",
+        "Unter Design Farbe, Punktschrift und Punktraster wählen.",
+        "Updates meldet die App selbst über GitHub Releases."
+      ],
+      "links": []
+    },
+    {
+      "id": "baustellen-pilot",
+      "name": "Baustellen Pilot Reloaded",
+      "repo": "Baustellen-Pilot-reloaded",
+      "public": false,
+      "kind": "android",
+      "category": "Arbeit",
+      "mono": "BP",
+      "tagline": "Aufträge, Kunden, Material und Regieberichte für die Baustelle.",
+      "description": "Wochenansicht mit Wetter der Arbeitszeit, Aufträge mit Material, Unterlagen, Fotos und Regieberichten samt Unterschrift und PDF. Kalender im Gerät, Statistik je Jahr.",
+      "features": [
+        "Woche mit Auftragslage und Wetter 7 bis 16 Uhr",
+        "Aufträge mit Netto, Brutto und MwSt",
+        "Material als Bedarf und Verbrauch in t und m³",
+        "Regieberichte mit Unterschrift und PDF ohne Internet",
+        "Kalender im Gerät, als ICS oder Google-Vorlage",
+        "Statistik mit Jahresvergleich"
+      ],
+      "tutorial": [
+        "APK laden und installieren.",
+        "Daten aus dem alten Baustellen Pilot: dort Export mit Dateien, hier Menü, Sicherung, Importieren.",
+        "Unter Kunden die Stammdaten anlegen, dann Aufträge.",
+        "Im Auftrag Material, Fotos und Regieberichte erfassen.",
+        "Im Kalender unter ⚙ den Zielkalender wählen."
+      ],
+      "links": []
+    },
+    {
+      "id": "pv-dashboard",
+      "name": "VOID Home Dashboard",
+      "repo": "PV-Dashboard",
+      "public": false,
+      "kind": "android",
+      "category": "Zuhause",
+      "mono": "PV",
+      "tagline": "SENEC Speicher, Wallbox, Zähler und Finanzen im Blick.",
+      "description": "Private Auswertung der SENEC.Home V3 hybrid mit Wallbox. Live-Werte im Heim-WLAN oder über die Cloud, Statistik mit Vorjahr und PVGIS, Kosten, Wallbox-Steuerung, Zählerstände und Finanzen.",
+      "features": [
+        "Live: PV, Verbrauch, Netz, Speicher, Wallbox, Autarkie",
+        "Statistik Tag bis Gesamt mit Vorjahr und PVGIS-Soll",
+        "Wallbox-Modus und Ladelog mit PDF",
+        "Strom- und Wasserzähler mit Leck-Warnung",
+        "Finanzen mit Abschlag-Check und Verträgen",
+        "Benachrichtigung bei vollem Akku"
+      ],
+      "tutorial": [
+        "APK aus dem neuesten Release laden und installieren.",
+        "Unter Einstellungen das SENEC-Konto eintragen.",
+        "Im Heim-WLAN die Adresse des Speichers angeben, unterwegs läuft es über die Cloud.",
+        "Tarif eintragen, damit Kosten und Ersparnis stimmen.",
+        "Updates unter Einstellungen, Updates."
+      ],
+      "links": []
+    },
+    {
+      "id": "hot-lz",
+      "name": "Hot LZ",
+      "repo": "Medevac-sim",
+      "public": true,
+      "kind": "web+android",
+      "category": "Spiel",
+      "mono": "HL",
+      "tagline": "Hubschrauber-Einsätze in Vietnam 1968 und Afghanistan 2010.",
+      "description": "Hubschraubersimulator im Browser und als Android-App. UH-1D, UH-60, CH-47 und CH-53GS. Verwundete bergen, heiße LZs, Bordschützen, Mehrspieler. Steuerung per Touch, Controller oder Tastatur.",
+      "features": [
+        "Zwei Einsatzgebiete mit eigener Landschaft",
+        "Vier Hubschrauber mit eigenem Flugverhalten",
+        "Heiße und kalte LZs, Bordschützen, Angriffe auf die FOB",
+        "Brownout und Böen in Afghanistan",
+        "Touch, Switch-Controller, Tastatur und Maus"
+      ],
+      "tutorial": [
+        "Im Browser spielen oder die APK installieren.",
+        "Im Hauptmenü Karte und Hubschrauber wählen.",
+        "Briefing lesen, zum gelben Wegpunkt fliegen.",
+        "Sanft im Rauchring landen, die Soldaten steigen selbst ein.",
+        "Verwundete auf Pad MED an der FOB abliefern."
+      ],
+      "web": "https://gun642.github.io/Medevac-sim/",
+      "apk": "https://gun642.github.io/Medevac-sim/apk/medevac-sim.apk",
+      "links": []
+    },
+    {
+      "id": "battle-of-hoth",
+      "name": "Battle of Hoth",
+      "repo": "Battleofhoth",
+      "public": true,
+      "kind": "web+android",
+      "category": "Spiel",
+      "mono": "BH",
+      "tagline": "3D-Ego-Shooter zur Schlacht von Hoth.",
+      "description": "Verteidige Echo Base als Rebell oder greif als Imperialer mit AT-ST und AT-AT an. Schneegleiter mit Schleppkabel, Geschütztürme, LAN-Mehrspieler in der App. Fan-Projekt.",
+      "features": [
+        "Rebellen oder Imperium",
+        "Schneegleiter mit Schleppkabel gegen AT-ATs",
+        "PBR-Grafik, Schatten, Bloom, drei Grafikstufen",
+        "Blaster-Sound nach dem Prinzip von Ben Burtt",
+        "LAN-Mehrspieler in der Android-App"
+      ],
+      "tutorial": [
+        "Im Browser spielen oder die APK installieren.",
+        "Seite wählen: Rebellen verteidigen, Imperium greift an.",
+        "AT-ST und AT-AT fallen nur durch Geschütztürme oder Schneegleiter.",
+        "Im Gleiter tief an ein AT-AT heran und das Schleppkabel abfeuern.",
+        "Updates prüft die App bei jedem Start."
+      ],
+      "web": "https://gun642.github.io/Battleofhoth/",
+      "apk": "https://raw.githubusercontent.com/GUN642/Battleofhoth/HEAD/dist/BattleOfHoth.apk",
+      "versionFile": "dist/version.json",
+      "links": []
+    },
+    {
+      "id": "ip2tgt",
+      "name": "IP2TGT",
+      "repo": "IP2TGT",
+      "public": true,
+      "kind": "web",
+      "category": "Fliegerei",
+      "mono": "IP",
+      "tagline": "Anflug vom Initial Point zur Landezone auf echtem 3D-Gelände.",
+      "description": "Web-App, die den Hubschrauber-Anflug IP zu TGT simuliert. Luftbilder, 3D-Gebäude, Hindernisse aus OpenStreetMap, Cockpit- und Außenansicht, NVG bei Nacht und eine Target Approach Plate zum Drucken.",
+      "features": [
+        "TGT und IP per MGRS, Lat/Lon, Karte oder GPS",
+        "Missweisung nach WMM2025",
+        "Geländefolgeflug mit Flare und Hover",
+        "Freileitungen, Masten, Wald als 3D-Hindernisse mit Warnung",
+        "Target Approach Plate als PNG oder PDF",
+        "Bebildertes Tutorial mit 10 Schritten"
+      ],
+      "tutorial": [
+        "Seite öffnen, das Tutorial startet beim ersten Mal von selbst.",
+        "TGT eingeben oder auf der Karte setzen.",
+        "IP eingeben oder Kurs und Entfernung angeben.",
+        "Profil wählen: geländefolgend oder konstant über LZ.",
+        "Anflug starten, Ansicht wechseln, Approach Plate erstellen."
+      ],
+      "web": "https://gun642.github.io/IP2TGT/",
+      "links": []
+    },
+    {
+      "id": "ch53-performance",
+      "name": "CH-53 Performance Tool",
+      "repo": "CH53_Performance_Tool",
+      "public": false,
+      "kind": "web",
+      "category": "Fliegerei",
+      "mono": "53",
+      "tagline": "Gewichts- und Leistungsrechner mit TOLD Card.",
+      "description": "Web-App für die CH-53: Planung, Current Conditions, Route Planning und TOLD Card. Installierbar als App, offline nutzbar, mit bebildertem Tutorial.",
+      "features": [
+        "Gewicht und Leistung",
+        "TOLD Card",
+        "Route Planning",
+        "Current Conditions",
+        "Offline als installierte Web-App",
+        "Tutorial mit neun Schritten"
+      ],
+      "tutorial": [
+        "Seite öffnen und über das Browsermenü zum Startbildschirm hinzufügen.",
+        "Das Tutorial startet beim ersten Mal, später über Info, Tutorial.",
+        "Bereiche über die Leiste unten wechseln."
+      ],
+      "web": "https://gun642.github.io/CH53_Performance_Tool/",
+      "links": []
+    },
+    {
+      "id": "ote-tool",
+      "name": "OT&E Planer",
+      "repo": "OTE-Tool",
+      "public": false,
+      "kind": "web",
+      "category": "Arbeit",
+      "mono": "OT",
+      "tagline": "Planung von Operational Test & Evaluation mit KI-Unterstützung.",
+      "description": "Vom Auftrag über COI, MOE/MOS und MOP/MOA bis zu Flugplanung, Testkarten und Bewertung. KI per eigenem Claude-Schlüssel, manuell oder aus. Alle Daten bleiben im Browser.",
+      "features": [
+        "Auftrag hochladen, Zusammenfassung und Aim",
+        "COI-Katalog mit automatischer Nummerierung",
+        "Flugplanung und Testkarten zum Drucken",
+        "Bewertung gegen Objective und Threshold",
+        "Traceability-Matrix und Review-Checklisten",
+        "Bebilderte Anleitung mit 12 Seiten"
+      ],
+      "tutorial": [
+        "Seite öffnen, die Anleitung startet beim ersten Mal.",
+        "Unter Einstellungen den KI-Modus wählen.",
+        "Auftrag hochladen und COI übernehmen.",
+        "Flüge planen und Testkarten drucken.",
+        "Projekt als .json sichern. Nur offene Unterlagen verwenden."
+      ],
+      "web": "https://gun642.github.io/OTE-Tool/",
+      "links": []
+    },
+    {
+      "id": "ugc-dashboard",
+      "name": "UGC Dashboard",
+      "repo": "UGC-Dashboard",
+      "public": false,
+      "kind": "web",
+      "category": "Business",
+      "mono": "UG",
+      "tagline": "Kooperationen, Verträge und Einnahmen für UGC-Creator.",
+      "description": "Installierbare Web-App für UGC-Arbeit mit Firmenkunden: Kooperationen, Vertragsvorlagen, Auswertung und Backups, mit Cloud-Sync.",
+      "features": [
+        "Kooperationen und Kunden",
+        "Vertragsvorlagen mit PDF",
+        "Auswertung der Einnahmen",
+        "Backups und Cloud-Sync",
+        "Installierbar als App"
+      ],
+      "tutorial": [
+        "Seite öffnen und zum Startbildschirm hinzufügen.",
+        "Kooperationen anlegen und Verträge erzeugen.",
+        "Regelmäßig ein Backup ziehen."
+      ],
+      "web": "https://gun642.github.io/UGC-Dashboard/",
+      "links": []
+    }
+  ]
+}
