@@ -288,7 +288,7 @@
       "id": "ch53-performance",
       "name": "CH-53 Performance Tool",
       "repo": "CH53_Performance_Tool",
-      "public": false,
+      "public": true,
       "kind": "web",
       "category": "Fliegerei",
       "mono": "53",
