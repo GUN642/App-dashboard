@@ -112,7 +112,10 @@
         "Nach jedem Neustart des Handys Shizuku neu starten."
       ],
       "links": [
-        { "label": "Shizuku", "url": "https://shizuku.rikka.app/" }
+        {
+          "label": "Shizuku",
+          "url": "https://shizuku.rikka.app/"
+        }
       ]
     },
     {
@@ -146,7 +149,7 @@
       "id": "baustellen-pilot",
       "name": "Baustellen Pilot Reloaded",
       "repo": "Baustellen-Pilot-reloaded",
-      "public": false,
+      "public": true,
       "kind": "android",
       "category": "Arbeit",
       "mono": "BP",
