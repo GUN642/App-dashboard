@@ -342,7 +342,7 @@
       "id": "ugc-dashboard",
       "name": "UGC Dashboard",
       "repo": "UGC-Dashboard",
-      "public": false,
+      "public": true,
       "kind": "web",
       "category": "Business",
       "mono": "UG",
