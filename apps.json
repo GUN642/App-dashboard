@@ -362,6 +362,21 @@
       ],
       "web": "https://gun642.github.io/UGC-Dashboard/",
       "links": []
+    },
+    {
+      "id": "normandy1944",
+      "name": "Normandy 1944",
+      "repo": "Normandy1944",
+      "public": true,
+      "kind": "web+android",
+      "category": "Sonstiges",
+      "mono": "N1",
+      "tagline": "Ego-Shooter zur Invasion in der Normandie im Browser – im Stil des Medevac-sim: läuft auf GitHub Pages, als Android-App (APK mit automatischer Update-Funktion) und auf PC, Handy, Tablet und Android TV.",
+      "description": "Ego-Shooter zur Invasion in der Normandie im Browser – im Stil des Medevac-sim: läuft auf GitHub Pages, als Android-App (APK mit automatischer Update-Funktion) und auf PC, Handy, Tablet und Android TV. Steuerung per Tastatur/Maus, Gamepad oder Touchscreen. Von amerikanischer und deutscher Seite spielbar.",
+      "features": [],
+      "tutorial": [],
+      "web": "https://gun642.github.io/Normandy1944/",
+      "links": []
     }
   ]
 }
