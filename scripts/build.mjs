@@ -136,9 +136,99 @@ async function encrypt(obj, pass) {
   return { v: 1, kdf: "PBKDF2-SHA256", iterations, salt: b64(salt), iv: b64(iv), data: b64(new Uint8Array(data)) };
 }
 
+// ---------- Neue Repos automatisch finden ----------
+// Repos, die weder in apps.json noch in hidden stehen, kommen als Entwurf in die private Ansicht (nie öffentlich).
+
+function cleanMd(s) {
+  return s.replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/[*_`]+/g, "")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function parseReadme(md) {
+  const lines = (md || "").replace(/\r/g, "").split("\n");
+  const title = cleanMd((lines.find(l => /^#\s/.test(l)) || "").replace(/^#\s*/, ""));
+  // erster echter Absatz nach dem Titel
+  let para = "";
+  for (const raw of lines) {
+    const l = raw.trim();
+    if (!l) { if (para) break; continue; }
+    if (/^(#|!\[|\||>|```|---|- |\* |\d+\. )/.test(l) || /^\*\*[^*]+:\*\*/.test(l)) { if (para) break; continue; }
+    const c = cleanMd(l);
+    if (c) para += (para ? " " : "") + c;
+  }
+  // Stichpunkte unter einer Überschrift mit „Funktion“ oder „Features“
+  const features = [];
+  let inF = false;
+  for (const raw of lines) {
+    if (/^#{2,3}\s/.test(raw)) { if (inF && features.length) break; inF = /funktion|feature/i.test(raw); continue; }
+    if (inF && /^\s*[-*]\s+/.test(raw)) {
+      const c = cleanMd(raw.replace(/^\s*[-*]\s+/, ""));
+      if (c) features.push(c.length > 140 ? c.slice(0, 137) + "…" : c);
+    }
+    if (features.length >= 8) break;
+  }
+  return { title, para, features };
+}
+
+function monoFor(name) {
+  const words = name.replace(/[^A-Za-z0-9ÄÖÜäöü ]+/g, " ").split(/\s+/).filter(Boolean);
+  const m = words.length > 1 ? words[0][0] + words[1][0] : (words[0] || "??").slice(0, 2);
+  return m.toUpperCase();
+}
+
+async function discover() {
+  const known = new Set([...catalog.apps.map(a => a.repo.toLowerCase()), ...(catalog.hidden || []).map(r => r.toLowerCase())]);
+  const self = (process.env.GITHUB_REPOSITORY || `${owner}/App-dashboard`).split("/")[1].toLowerCase();
+  known.add(self);
+  let list = null;
+  if (useToken) list = await gh(`/user/repos?per_page=100&affiliation=owner&sort=pushed`);
+  if (!Array.isArray(list)) list = await gh(`/users/${owner}/repos?per_page=100&sort=pushed`);
+  if (!Array.isArray(list)) return [];
+  const found = [];
+  for (const repo of list) {
+    if (repo.owner?.login?.toLowerCase() !== owner.toLowerCase()) continue;
+    if (repo.fork || repo.archived || known.has(repo.name.toLowerCase())) continue;
+    const r = `/repos/${owner}/${repo.name}`;
+    const [readme, rootList] = await Promise.all([
+      gh(`${r}/readme`, { raw: true }),
+      gh(`${r}/contents/`),
+    ]);
+    const files = new Set((Array.isArray(rootList) ? rootList : []).map(f => f.name));
+    const android = files.has("app") && (files.has("build.gradle.kts") || files.has("build.gradle")) || files.has("android");
+    const web = repo.has_pages || files.has("index.html") || files.has("web");
+    const info = parseReadme(readme);
+    const [titleName, titleSub] = info.title.split(/\s+[–—-]\s+/, 2);
+    const name = titleName || repo.name.replace(/[-_]+/g, " ");
+    found.push({
+      id: `auto-${repo.name.toLowerCase()}`,
+      name,
+      repo: repo.name,
+      public: false,
+      auto: true,
+      kind: android && web ? "web+android" : android ? "android" : "web",
+      category: "Neu",
+      mono: monoFor(name),
+      tagline: repo.description || titleSub || info.para.split(/(?<=\.)\s/)[0] || "Noch ohne Beschreibung.",
+      description: info.para || repo.description || "Noch ohne Beschreibung. In apps.json ergänzen.",
+      features: info.features,
+      tutorial: [],
+      ...(repo.has_pages ? { web: `https://${owner.toLowerCase()}.github.io/${repo.name}/` } : {}),
+      links: [],
+    });
+  }
+  return found;
+}
+
+const discovered = await discover().catch(e => { console.warn(`Suche nach neuen Repos: ${e.message}`); return []; });
+if (discovered.length) console.log(`Neue Repos: ${discovered.map(a => a.repo).join(", ")}`);
+
 console.log(`Baue Dashboard für ${owner} (${catalog.apps.length} Apps, Token: ${token ? "ja" : "nein"})`);
 const apps = [];
-for (const app of catalog.apps) {
+for (const app of [...catalog.apps, ...discovered]) {
   process.stdout.write(`- ${app.name} … `);
   const l = await live(app).catch(e => { console.warn(e.message); return { reachable: false }; });
   console.log(l.reachable ? `${l.version ?? "ohne Version"}, ${l.lastCommit?.date?.slice(0, 10) ?? "?"}` : "ohne Live-Daten");

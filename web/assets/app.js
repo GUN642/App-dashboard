@@ -76,6 +76,7 @@
     if (a.live?.version) p.push(`<span class="pill solid">v${esc(a.live.version)}</span>`);
     if (vis) p.push(a.public ? `<span class="pill red">Öffentlich</span>` : `<span class="pill">Nur ich</span>`);
     if (MODE === "private" && a.live?.private) p.push(`<span class="pill">Privates Repo</span>`);
+    if (a.auto) p.push(`<span class="pill red">Automatisch erkannt</span>`);
     return `<div class="pills">${p.join("")}</div>`;
   }
 
@@ -115,6 +116,7 @@
           ${activity(a)}
         </div>
         ${actions(a)}
+        ${MODE === "private" && a.auto ? `<div class="actions"><button class="btn small" data-hide="${esc(a.id)}" ${state.saving.has(a.id) ? "disabled" : ""}>Keine App, ausblenden</button></div>` : ""}
       </article>`;
   }
 
@@ -306,19 +308,18 @@
     return { sha: file.sha, json: JSON.parse(b64ToUtf8(file.content)), branch };
   }
 
-  async function writePublic(a, value) {
+  // Ändert apps.json per Commit. mutate(json) bekommt eine frische Kopie.
+  async function editCatalog(message, mutate) {
     const repo = state.data.repo;
     let file = lastFile || await readAppsJson();
     for (let attempt = 0; ; attempt++) {
       const json = structuredClone(file.json);
-      const entry = json.apps.find(x => x.id === a.id);
-      if (!entry) throw new Error(`${a.id} fehlt in apps.json`);
-      entry.public = value;
+      mutate(json);
       try {
         const res = await ghApi(`/repos/${repo}/contents/apps.json`, {
           method: "PUT",
           body: JSON.stringify({
-            message: `${a.name} ${value ? "öffentlich zeigen" : "nur privat zeigen"}`,
+            message,
             content: utf8ToB64(JSON.stringify(json, null, 2) + "\n"),
             sha: file.sha,
             branch: file.branch,
@@ -333,6 +334,53 @@
         file = await readAppsJson();
       }
     }
+  }
+
+  // Eintrag für apps.json aus einem automatisch gefundenen Repo
+  function catalogEntry(a) {
+    const { live, auto, ...rest } = a;
+    return { ...rest, id: a.id.replace(/^auto-/, ""), category: a.category === "Neu" ? "Sonstiges" : a.category };
+  }
+
+  function writePublic(a, value) {
+    return editCatalog(`${a.name} ${value ? "öffentlich zeigen" : "nur privat zeigen"}`, json => {
+      let entry = json.apps.find(x => x.id === a.id || x.repo === a.repo);
+      if (!entry) {
+        if (!a.auto) throw new Error(`${a.id} fehlt in apps.json`);
+        entry = catalogEntry(a);
+        json.apps.push(entry);
+      }
+      entry.public = value;
+    });
+  }
+
+  function hideRepo(id) {
+    const a = state.data.apps.find(x => x.id === id);
+    if (!a) return;
+    if (!store(LS.token)) {
+      toast("Zum Ausblenden erst unten einen GitHub-Token eintragen.", true);
+      $("#settings")?.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+    state.saving.set(id, a.public);
+    renderGrid();
+    writeQueue = writeQueue.then(async () => {
+      try {
+        await editCatalog(`${a.repo} ausblenden`, json => {
+          json.hidden = [...new Set([...(json.hidden || []), a.repo])];
+        });
+        state.data.apps = state.data.apps.filter(x => x !== a);
+        toast(`${a.name} ausgeblendet. Wieder zeigen: Repo aus hidden in apps.json löschen.`);
+      } catch (e) {
+        lastFile = null;
+        toast(`Nicht gespeichert. ${e.message}`, true);
+      } finally {
+        state.saving.delete(id);
+        renderStats();
+        renderChips();
+        renderGrid();
+      }
+    });
   }
 
   function setPublic(id, value) {
@@ -350,6 +398,7 @@
       try {
         await writePublic(a, value);
         a.public = value;
+        if (a.auto) { a.auto = false; a.id = a.id.replace(/^auto-/, ""); if (a.category === "Neu") a.category = "Sonstiges"; }
         toast(`${a.name}: ${value ? "öffentlich" : "nur für dich"}. Die Seite ist in 1 bis 2 Minuten aktuell.`);
       } catch (e) {
         lastFile = null;
@@ -410,6 +459,8 @@
       renderGrid();
     });
     $("#grid").addEventListener("click", e => {
+      const h = e.target.closest("[data-hide]");
+      if (h) { e.stopPropagation(); hideRepo(h.dataset.hide); return; }
       const t = e.target.closest("[data-toggle]");
       if (t) { e.stopPropagation(); setPublic(t.dataset.toggle, t.getAttribute("aria-checked") !== "true"); return; }
       if (e.target.closest("a")) return;

@@ -38,3 +38,7 @@ Eintrag in `apps.json` ergänzen. `mono` sind zwei Zeichen für die Kachel, `web
 DASHBOARD_PASSWORD=test DASHBOARD_PLAIN=1 node scripts/build.mjs
 cd site && python3 -m http.server
 ```
+
+## Neue Repos
+
+Der Bau findet neue Repos selbst (mit `REPOS_TOKEN` auch private, ohne nur öffentliche). Forks, archivierte Repos und Repos in `hidden` werden übersprungen. Ein neues Repo erscheint nur in der privaten Ansicht als „Automatisch erkannt“, mit Name, Beschreibung und Funktionen aus der README. Der Schalter Öffentlich übernimmt es fest in `apps.json`. „Keine App, ausblenden“ trägt es in `hidden` ein.
