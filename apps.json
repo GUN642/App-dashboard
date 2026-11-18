@@ -61,7 +61,7 @@
       "id": "void-maps",
       "name": "VOID Maps",
       "repo": "VOID-Maps",
-      "public": false,
+      "public": true,
       "kind": "android",
       "category": "Navigation",
       "mono": "VM",
