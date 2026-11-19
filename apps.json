@@ -377,6 +377,20 @@
       "tutorial": [],
       "web": "https://gun642.github.io/Normandy1944/",
       "links": []
+    },
+    {
+      "id": "farty",
+      "name": "Farty",
+      "repo": "Farty",
+      "public": true,
+      "kind": "web",
+      "category": "Sonstiges",
+      "mono": "FA",
+      "tagline": "Noch ohne Beschreibung.",
+      "description": "Noch ohne Beschreibung. In apps.json ergänzen.",
+      "features": [],
+      "tutorial": [],
+      "links": []
     }
   ]
 }
